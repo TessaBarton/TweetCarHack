@@ -1,5 +1,7 @@
 /* MotorOne, as in, the first of the motor functions
-define final function here
+
+right now it drives forward and backward
+
 By Miss Theresa Barton
 */
 
@@ -72,13 +74,13 @@ void halt(){
   /*welcome to the poorly wired left wheel*/
 /*backwards L*/
   digitalWrite(leftOne, HIGH);
-  digitalWrite(leftTwo, LOW);
-  digitalWrite(leftThree,LOW);
+  digitalWrite(leftTwo, HIGH);
+  digitalWrite(leftThree,HIGH);
   digitalWrite(leftFour, HIGH);
 
 //  ///*backward R*/
-    digitalWrite(rightTwo, LOW);
-    digitalWrite(rightThree,LOW);
+    digitalWrite(rightTwo, HIGH);
+    digitalWrite(rightThree,HIGH);
     digitalWrite(rightFour, HIGH);
     digitalWrite(rightOne, HIGH);
 }
