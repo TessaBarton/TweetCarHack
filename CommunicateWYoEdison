@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int redPin = 2;                  // Red LED connected to digital pin 12
+int greenPin = 4; 
+int bluePin= 11;// Green LED connected to digital pin 11
+FILE* mypipe; 
+long lSize;
+char * buffer;
+size_t result;
+FILE* err;
+
+void setup()                      // run once, when the sketch starts
+{
+  pinMode(redPin, OUTPUT);        // sets the digital pin as output
+  pinMode(greenPin, OUTPUT);      // sets the digital pin as output
+  pinMode(bluePin, OUTPUT);
+ 
+}
+
+void loop()                       // run over and over again
+{
+  mypipe = fopen("/home/root/pipe1","r");
+  err = fopen("/home/root/err", "a+");
+  
+  // catch errors
+  if(mypipe==NULL){fputs ("File error",stderr); exit (1);}
+  
+  // obtain file size 
+  fseek (mypipe , 0 , SEEK_END);
+  //lSize = ftell (mypipe);
+  
+ 
+  // allocate memory to contain the whole file:
+  buffer = (char*) malloc (sizeof(char) * 1);
+  if (buffer == NULL) {fputs ("Memory error",stderr); exit (2);}
+  
+  
+  // copy the file into the buffer:
+  fputs("BEGIN\n", err);
+  result = fread (buffer, 1, 1, mypipe);
+  fputs("READ\n", err);
+  //if (result != lSize) {fputs ("Reading error",stderr); exit (3);}
+  //fputs(buffer, err);
+  
+  if ('x' == buffer[0]) {
+    digitalWrite(redPin, HIGH);
+    delay(1000);  
+    digitalWrite(redPin, LOW);
+    delay(1000);
+  }
+  
+  
+  //LED s
+  //digitalWrite(redPin, LOW);     // sets the Red LED on
+  //digitalWrite(greenPin, LOW);   // sets the Green LED on
+  //digitalWrite(bluePin, HIGH);
+  //delay(50); 
+  
+  fclose(mypipe);
+  //fputs("running", err); // Debugg
+  fclose(err);
+  //free (buffer);
+
+                      // waits for half a second
+}
